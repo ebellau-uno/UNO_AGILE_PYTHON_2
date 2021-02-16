@@ -10,9 +10,9 @@ Author: Eugene Bellau
 class My_Obj():
     """
     Title: My_Object
-    Description:
-    Arguments:
-    Description:
+    Description: An object that will define a name and importance level
+    Arguments: self.name and self.importance
+    Returns: The object will return the defined name and importance level
     """
 
     def __init__(self, name, importance):
