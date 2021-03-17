@@ -160,17 +160,18 @@ def update():
     if request.method == "POST":
         try:
             data = request.form
-            args = ["name", "description", "date", "importance"]
+            args = ["id", "name", "description", "date", "importance"]
             for arg in args:
                 if not data[arg]:
                     return f"{arg} is a required argument"
+            id = data["id"]
             name = data["name"]
             description = data["description"]
             date = data["date"]
             importance = data["importance"]
             cursor = mysql.connection.cursor()
-            query = "INSERT INTO todo (name, description, date, importance) VALUES (%s, %s, %s, %s);"
-            params = [name, description, date, importance]
+            query = "UPDATE todo SET name = %s, description = %s, date = %s, importance = %s WHERE id = %s"
+            params = [name, description, date, importance, id]
             cursor.execute(query, params)
             status = cursor.fetchall()
             mysql.connection.commit()
@@ -181,19 +182,20 @@ def update():
             abort(404)
     else:
         try:
-            args = ["name", "description", "date", "importance"]
+            args = ["id", "name", "description", "date", "importance"]
             for arg in args:
                 if not request.args.get(arg):
                     return f"{arg} is a required argument"
 
             app.logger.debug("ARGS are %s", request.args)
+            id = request.args.get("id")
             name = request.args.get("name")
             description = request.args.get("description")
             date = request.args.get("date")
             importance = request.args.get("importance")
             cursor = mysql.connection.cursor()
-            query = "INSERT INTO todo (name, description, date, importance) VALUES (%s, %s, %s, %s);"
-            params = [name, description, date, importance]
+            query = "UPDATE todo SET name = %s, description = %s, date = %s, importance = %s WHERE id = %s"
+            params = [name, description, date, importance, id]
             cursor.execute(query, params)
             status = cursor.fetchall()
             mysql.connection.commit()
@@ -258,6 +260,21 @@ def delete():
         except Exception as err:
             app.logger.error(err)
             abort(404)
+@app.route("/", methods=["GET", "POST"])
+def home():
+    """
+    Title: home.
+    Description: home page for website
+    Arguments:
+        None
+    Returns:
+        home template with data
+    Raises:
+        None
+    """
+    data = all()
+    return render_template("index.html", data = data)
+
 
 if __name__ == "__main__":
     app.run()
