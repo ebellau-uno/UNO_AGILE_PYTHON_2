@@ -24,7 +24,7 @@ def fetch():
     data = " ".join(todo)
     return data
     
-    
+  
 
 
 def refresh_all(window, data):
@@ -39,23 +39,25 @@ def refresh_all(window, data):
     except Exception as err:
         raise Exception from err
 
+
+
 def start_app():
     data = fetch()
 
-layout = [[psg.Text("Todo Items"), psg.Text(
-    size=(12,1), key='-DISPLAY-')],
-    [psg.Text(data, key='-DATA-')],
-    [psg.Text("ID", size=(12,1)), psg.Input(key='-ID-')],
-    [psg.Text("NAME", size=(12,1)), psg.Input(key='-NAME-')],
-    [psg.Text("DESCRIPTION", size=(12,1)), psg.Input(key='-DESCRIPTION-')],
-    [psg.Text("DATE", size=(12,1)), psg.Input(key='-DATE-')],
-    [psg.Text("IMPORTANCE", size=(12,1)), psg.Input(key='-IMPORTANCE-')],
-    [psg.Text("")],
-    [psg.Button("Add"), psg.Button("Update"), psg.Button("Delete"), psg.Button("EXIT")]
-]
+    layout = [[psg.Text("Todo Items"), psg.Text(
+        size=(12,1), key='-DISPLAY-')],
+        [psg.Text(data, key='-DATA-')],
+        [psg.Text("ID", size=(12,1)), psg.Input(key='-ID-')],
+        [psg.Text("NAME", size=(12,1)), psg.Input(key='-NAME-')],
+        [psg.Text("DESCRIPTION", size=(12,1)), psg.Input(key='-DESCRIPTION-')],
+        [psg.Text("DATE", size=(12,1)), psg.Input(key='-DATE-')],
+        [psg.Text("IMPORTANCE", size=(12,1)), psg.Input(key='-IMPORTANCE-')],
+        [psg.Text("")],
+        [psg.Button("Add"), psg.Button("Update"), psg.Button("Delete"), psg.Button("EXIT")]
+    ]
 
-# Create a window
-window = psg.Window('TODO App', layout)
+ # Create a window
+window = psg.Window('TODO App', layout) 
 
 # Create an event loop
 while True:
