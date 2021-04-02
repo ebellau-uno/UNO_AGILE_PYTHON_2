@@ -2,7 +2,7 @@ import json
 
 import PySimpleGUI as psg
 import requests
-
+import sys
 
 def add(name, description, date, importance):
     response = requests.get(
@@ -13,6 +13,7 @@ def update(id, name, description, date, importance):
     response = requests.get(
         f"http://ebellau.pythonanywhere.com/v1/update?id={id}&name={name}&description={description}&date={date}&importance={importance}")
     return
+
 def delete(id):
     delete = requests.get(
         f"http://ebellau.pythonanywhere.com/v1/delete?id={id}")
@@ -70,7 +71,7 @@ def start_app():
     while True:
         event, values = window.read()
         if event == "Exit" or event == psg.WIN_CLOSED:
-            break
+            sys.exit()
         if event == "Add":
             add(values["-NAME-"], values["-DESCRIPTION-"], values["-DATE-"], values["-IMPORTANCE-"])
         if event == "Update":
