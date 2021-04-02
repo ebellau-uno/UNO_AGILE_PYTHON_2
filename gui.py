@@ -70,7 +70,7 @@ def start_app():
     # Create an event loop
     while True:
         event, values = window.read()
-        if event == "Exit" or event == psg.WIN_CLOSED:
+        if event == "EXIT" or event == psg.WIN_CLOSED:
             sys.exit()
         if event == "Add":
             add(values["-NAME-"], values["-DESCRIPTION-"], values["-DATE-"], values["-IMPORTANCE-"])
