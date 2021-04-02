@@ -9,9 +9,17 @@ def add(name, description, date, importance):
         f"http://ebellau.pythonanywhere.com/v1/add?name={name}&description={description}&date={date}&importance={importance}")
     return
 
+def update(id, name, description, date, importance):
+    response = requests.get(
+        f"http://ebellau.pythonanywhere.com/v1/update?id={id}&name={name}&description={description}&date={date}&importance={importance}")
+    return
+def delete(id):
+    delete = requests.get(
+        f"http://ebellau.pythonanywhere.com/v1/delete?id={id}")
+    return
 
 def fetch():
-    responce = requests.get(
+    response = requests.get(
         "http://ebellau.pythonanywhere.com/v1/all")
     data = response.json()
     todo = []
@@ -23,9 +31,6 @@ def fetch():
         todo.append("\n")
     data = " ".join(todo)
     return data
-    
-  
-
 
 def refresh_all(window, data):
     try:
@@ -38,6 +43,8 @@ def refresh_all(window, data):
         return
     except Exception as err:
         raise Exception from err
+
+
 
 
 
@@ -56,23 +63,23 @@ def start_app():
         [psg.Button("Add"), psg.Button("Update"), psg.Button("Delete"), psg.Button("EXIT")]
     ]
 
- # Create a window
-window = psg.Window('TODO App', layout) 
+    # Create a window
+    window = psg.Window('TODO App', layout) 
 
-# Create an event loop
-while True:
-    event, values = window.read()
-    if event == "Exit" or event == psg.WIN_CLOSED:
-        break
-    if event == "Add":
-        add(values["-NAME-"], values["-DESCRIPTION-"], values["-DATE-"], values["-IMPORTANCE-"])
-    if event == "Update":
-        update(values["-NAME-"], values["-DESCRIPTION-"], values["-DATE-"], values["-IMPORTANCE-"])
-    if event == "Delete":
-        delete(values["-ID-"])
-    data = fetch()
-    refresh_all(window, data)
-window.close()        
+    # Create an event loop
+    while True:
+        event, values = window.read()
+        if event == "Exit" or event == psg.WIN_CLOSED:
+            break
+        if event == "Add":
+            add(values["-NAME-"], values["-DESCRIPTION-"], values["-DATE-"], values["-IMPORTANCE-"])
+        if event == "Update":
+            update(values["-ID-"], values["-NAME-"], values["-DESCRIPTION-"], values["-DATE-"], values["-IMPORTANCE-"])
+        if event == "Delete":
+            delete(values["-ID-"])
+        data = fetch()
+        refresh_all(window, data)
+    window.close()        
 
 
 if __name__ == "__main__":
